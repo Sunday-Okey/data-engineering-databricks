@@ -1,0 +1,11 @@
+from pyspark.sql.functions import *
+from pyspark import pipelines as dp
+import ast
+
+list_var = spark.conf.get("table_list")
+list_var_list = ast.literal_eval(list_var)
+
+for i in list_var_list:
+  @dp.table(name= f'table_{i}')
+  def table():
+    return spark.readStream.table("products")
